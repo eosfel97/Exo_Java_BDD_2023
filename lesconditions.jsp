@@ -46,7 +46,7 @@ Oui C est compris entre A et B</p>
     <p>Valeur 1 est pair.</p>
 <% } else   { %>
     <p>Valeur 1 impair</p>
-<% }%>
+<% } %>
 <p><a href="index.html">Retour au sommaire</a></p>
 </body>
 </html>
