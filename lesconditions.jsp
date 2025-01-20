@@ -59,6 +59,7 @@ Oui C est compris entre A et B</p>
     <input type="text" name="devinerChiffre">
     <input type="submit" value="Deviner">
 </form>
+
 <% 
     // Générer un nombre secret aléatoire entre 1 et 100
     int nombreSecret = (int) (Math.random() * 100) + 1;
@@ -77,8 +78,7 @@ Oui C est compris entre A et B</p>
         }
     }
 %>
-
-</% if %>
+<% } %>
 
 <p><a href="index.html">Retour au sommaire</a></p>
 </body>
