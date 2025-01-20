@@ -48,9 +48,9 @@ Oui C est compris entre A et B</p>
 <% } %>
 
 <% if (intValeur2 % 2 ==0 ) { %>
-    <p>Valeur 1 estPair.</p>
+    <p>Valeur 2 estPair.</p>
 <% } else   { %>
-    <p>Valeur 1 est Impair</p>
+    <p>Valeur 2 est Impair</p>
 <% } %>
 
 <% } %>
