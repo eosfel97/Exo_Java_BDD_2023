@@ -52,8 +52,34 @@ Oui C est compris entre A et B</p>
 <% } else   { %>
     <p>Valeur 2 est Impair</p>
 <% } %>
+<%-- Exercice 3 : Devinez le chiffre ? --%>
+<h2>Exercice 3 : Devinez le chiffre ?</h2>
+<form action="#" method="post">
+    <p>Saisir un nombre entre 1 et 100 pour deviner le chiffre secret :</p>
+    <input type="text" name="devinerChiffre">
+    <input type="submit" value="Deviner">
+</form>
+<% 
+    // Générer un nombre secret aléatoire entre 1 et 100
+    int nombreSecret = (int) (Math.random() * 100) + 1;
+    String devinerChiffre = request.getParameter("devinerChiffre");
 
-<% } %>
+    // Vérifier si un nombre a été saisi pour deviner
+    if (devinerChiffre != null) {
+        int chiffreSaisi = Integer.parseInt(devinerChiffre);
+
+        if (chiffreSaisi < nombreSecret) {
+            out.println("<p>Le nombre que vous avez saisi est trop petit. Essayez encore !</p>");
+        } else if (chiffreSaisi > nombreSecret) {
+            out.println("<p>Le nombre que vous avez saisi est trop grand. Essayez encore !</p>");
+        } else {
+            out.println("<p>Félicitations ! Vous avez deviné le bon nombre : " + nombreSecret + ".</p>");
+        }
+    }
+%>
+
+</% if %>
+
 <p><a href="index.html">Retour au sommaire</a></p>
 </body>
 </html>
