@@ -42,7 +42,7 @@
         }
     }
 %>
-<p>Il y a <%= compt %> occurrences de la lettre 'e' dans votre chaîne.</p>
+<p>Il y a <%= compt %> fois de la lettre 'e' dans votre chaîne.</p>
 <br>
 <h2>Exercice 2 : Affichage verticale</h2>
 <p>Votre chaîne en affichage vertical :</p>
