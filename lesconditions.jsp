@@ -8,91 +8,63 @@
 <form action="#" method="post">
     <p>Saisir la valeur 1 : <input type="text" id="inputValeur" name="valeur1"></p>
     <p>Saisir la valeur 2 : <input type="text" id="inputValeur" name="valeur2"></p>
+    <p>Saisir la valeur 3 : <input type="text" id="inputValeur" name="valeur3"></p>
     <p><input type="submit" value="Afficher"></p>
 </form>
 
-<%-- Récupération des valeurs --%>
+<%-- Récupération des valeurs saisies --%>
 <% String valeur1 = request.getParameter("valeur1"); %>
 <% String valeur2 = request.getParameter("valeur2"); %>
+<% String valeur3 = request.getParameter("valeur3"); %>
 
-<% if (valeur1 != null && valeur2 != null) { %>
-    <%-- Conversion des valeurs en entiers pour la comparaison --%>
-    <% int intValeur1 = Integer.parseInt(valeur1); %>
-    <% int intValeur2 = Integer.parseInt(valeur2); %>
-    
-    <%-- Comparaison des deux valeurs --%>
-    <% if (intValeur1 > intValeur2) { %>
-        <p>Valeur 1 est supérieure à Valeur 2.</p>
-    <% } else if (intValeur1 < intValeur2) { %>
-        <p>Valeur 1 est inférieure à Valeur 2.</p>
+<% if (valeur1 != null && valeur2 != null && valeur3 != null) { %>
+    <%-- Conversion des valeurs en entiers --%>
+    <% 
+        int intValeur1 = Integer.parseInt(valeur1); 
+        int intValeur2 = Integer.parseInt(valeur2); 
+        int intValeur3 = Integer.parseInt(valeur3); 
+    %>
+
+    <%-- Comparaison des trois valeurs --%>
+    <h2>Comparaison des valeurs</h2>
+    <% if (intValeur3 >= Math.min(intValeur1, intValeur2) && intValeur3 <= Math.max(intValeur1, intValeur2)) { %>
+        <p>La valeur 3 (<%= intValeur3 %>) est comprise entre Valeur 1 (<%= intValeur1 %>) et Valeur 2 (<%= intValeur2 %>).</p>
     <% } else { %>
-        <p>Valeur 1 est égale à Valeur 2.</p>
+        <p>La valeur 3 (<%= intValeur3 %>) n'est pas comprise entre Valeur 1 (<%= intValeur1 %>) et Valeur 2 (<%= intValeur2 %>).</p>
     <% } %>
 
-    <%-- Exercice 1 : Comparaison 1 --%>
-    <h2>Exercice 1 : Comparaison 1</h2>
-    <form action="#" method="post">
-        <p>Saisir la valeur A : <input type="text" name="valeurA"></p>
-        <p>Saisir la valeur B : <input type="text" name="valeurB"></p>
-        <p>Saisir la valeur C : <input type="text" name="valeurC"></p>
-        <p><input type="submit" value="Vérifier"></p>
-    </form>
-    <%
-        String valeurA = request.getParameter("valeurA");
-        String valeurB = request.getParameter("valeurB");
-        String valeurC = request.getParameter("valeurC");
-
-        if (valeurA != null && valeurB != null && valeurC != null) {
-            int intA = Integer.parseInt(valeurA);
-            int intB = Integer.parseInt(valeurB);
-            int intC = Integer.parseInt(valeurC);
-
-            if (intC >= intA && intC <= intB) {
-                out.println("<p>Oui, C est compris entre A et B.</p>");
-            } else {
-                out.println("<p>Non, C n'est pas compris entre A et B.</p>");
-            }
-        }
-    %>
-
     <%-- Exercice 2 : Pair ou Impair --%>
-    <h2>Exercice 2 : Pair ou Impair ?</h2>
-    <%
-        if (intValeur1 % 2 == 0) {
-            out.println("<p>Valeur 1 est Pair.</p>");
-        } else {
-            out.println("<p>Valeur 1 est Impair.</p>");
-        }
-
-        if (intValeur2 % 2 == 0) {
-            out.println("<p>Valeur 2 est Pair.</p>");
-        } else {
-            out.println("<p>Valeur 2 est Impair.</p>");
-        }
-    %>
+    <h2>Exercice 2 : Pair ou Impair</h2>
+    <p>Valeur 1 (<%= intValeur1 %>) est <% out.print((intValeur1 % 2 == 0) ? "Pair" : "Impair"); %>.</p>
+    <p>Valeur 2 (<%= intValeur2 %>) est <% out.print((intValeur2 % 2 == 0) ? "Pair" : "Impair"); %>.</p>
+    <p>Valeur 3 (<%= intValeur3 %>) est <% out.print((intValeur3 % 2 == 0) ? "Pair" : "Impair"); %>.</p>
 
     <%-- Exercice 3 : Devinez le chiffre ? --%>
     <h2>Exercice 3 : Devinez le chiffre ?</h2>
-    <form action="#" method="post">
-        <p>Saisir un nombre entre 1 et 100 pour deviner le chiffre secret :</p>
-        <input type="text" name="devinerChiffre">
-        <input type="submit" value="Deviner">
-    </form>
     <%
-        // Générer un nombre secret aléatoire entre 1 et 100
         int nombreSecret = (int) (Math.random() * 100) + 1;
-        String devinerChiffre = request.getParameter("devinerChiffre");
+        if (intValeur1 < nombreSecret) {
+            out.println("<p>Valeur 1 (" + intValeur1 + ") est trop petite pour deviner le nombre secret.</p>");
+        } else if (intValeur1 > nombreSecret) {
+            out.println("<p>Valeur 1 (" + intValeur1 + ") est trop grande pour deviner le nombre secret.</p>");
+        } else {
+            out.println("<p>Bravo ! Valeur 1 (" + intValeur1 + ") correspond au nombre secret (" + nombreSecret + ").</p>");
+        }
 
-        if (devinerChiffre != null) {
-            int chiffreSaisi = Integer.parseInt(devinerChiffre);
+        if (intValeur2 < nombreSecret) {
+            out.println("<p>Valeur 2 (" + intValeur2 + ") est trop petite pour deviner le nombre secret.</p>");
+        } else if (intValeur2 > nombreSecret) {
+            out.println("<p>Valeur 2 (" + intValeur2 + ") est trop grande pour deviner le nombre secret.</p>");
+        } else {
+            out.println("<p>Bravo ! Valeur 2 (" + intValeur2 + ") correspond au nombre secret (" + nombreSecret + ").</p>");
+        }
 
-            if (chiffreSaisi < nombreSecret) {
-                out.println("<p>Le nombre que vous avez saisi est trop petit. Essayez encore !</p>");
-            } else if (chiffreSaisi > nombreSecret) {
-                out.println("<p>Le nombre que vous avez saisi est trop grand. Essayez encore !</p>");
-            } else {
-                out.println("<p>Félicitations ! Vous avez deviné le bon nombre : " + nombreSecret + ".</p>");
-            }
+        if (intValeur3 < nombreSecret) {
+            out.println("<p>Valeur 3 (" + intValeur3 + ") est trop petite pour deviner le nombre secret.</p>");
+        } else if (intValeur3 > nombreSecret) {
+            out.println("<p>Valeur 3 (" + intValeur3 + ") est trop grande pour deviner le nombre secret.</p>");
+        } else {
+            out.println("<p>Bravo ! Valeur 3 (" + intValeur3 + ") correspond au nombre secret (" + nombreSecret + ").</p>");
         }
     %>
 <% } %>
