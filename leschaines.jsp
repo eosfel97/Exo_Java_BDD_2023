@@ -94,7 +94,7 @@ Lhvrsr lvex</p>
 Exemple : L'hiver sera pluvieux</br>
 xueivulp ares revih'l</p>
 <br>
-<p>Votre chaîne inversée (en verlant) :</p>
+<p>Votre chaîne en verlant :</p>
 <%
     StringBuilder inverser = new StringBuilder(chaine);
     out.print(inverser.reverse().toString());
