@@ -3,7 +3,7 @@
 <%
     Integer nombreSecret = (Integer) session.getAttribute("nombreSecret");
     if (nombreSecret == null) {
-        nombreSecret = new Random().nextInt(100) + 1; 
+        nombreSecret = new Random().nextInt(100) + 1;
         session.setAttribute("nombreSecret", nombreSecret);
     }
 %>
@@ -47,30 +47,38 @@
     <p>Valeur 2 (<%= intValeur2 %>) est <% out.print((intValeur2 % 2 == 0) ? "Pair" : "Impair"); %>.</p>
     <p>Valeur 3 (<%= intValeur3 %>) est <% out.print((intValeur3 % 2 == 0) ? "Pair" : "Impair"); %>.</p>
 
-    <%-- Exercice 3 : Devinez le chiffre ? --%>
+    <h1>Exercices sur les conditions</h1>
+
+    <!-- Formulaire pour deviner le nombre -->
     <h2>Exercice 3 : Devinez le nombre</h2>
     <form action="#" method="post">
         <p>Devinez le nombre (entre 1 et 100) : <input type="text" name="devine" required></p>
         <p><input type="submit" value="Deviner"></p>
     </form>
+    
     <%
-    String devineStr = request.getParameter("devine");
-    if (devineStr != null && !devineStr.isEmpty()) {
-        try {
-            int devine = Integer.parseInt(devineStr);
-            if (devine < nombreSecret) {
-                out.println("<p>Votre nombre (" + devine + ") est trop petit.</p>");
-            } else if (devine > nombreSecret) {
-                out.println("<p>Votre nombre (" + devine + ") est trop grand.</p>");
-            } else {
-                out.println("<p>Bravo ! Vous avez trouvé le nombre secret (" + nombreSecret + ").</p>");
-                session.removeAttribute("nombreSecret");
+        // Vérification de l'entrée utilisateur
+        String devineStr = request.getParameter("devine");
+        if (devineStr != null && !devineStr.isEmpty()) {
+            try {
+                int devine = Integer.parseInt(devineStr);
+    
+                // Vérification des bornes
+                if (devine < 1 || devine > 100) {
+                    out.println("<p style='color: red;'>Veuillez entrer un nombre entre 1 et 100.</p>");
+                } else if (devine < nombreSecret) {
+                    out.println("<p style='color: blue;'>Votre nombre (" + devine + ") est trop petit.</p>");
+                } else if (devine > nombreSecret) {
+                    out.println("<p style='color: blue;'>Votre nombre (" + devine + ") est trop grand.</p>");
+                } else {
+                    out.println("<p style='color: green;'>Bravo ! Vous avez trouvé le nombre secret (" + nombreSecret + ").</p>");
+                    session.removeAttribute("nombreSecret"); 
+                }
+            } catch (NumberFormatException e) {
+                out.println("<p style='color: red;'>Veuillez saisir un nombre valide.</p>");
             }
-        } catch (NumberFormatException e) {
-            out.println("<p>Veuillez saisir un nombre valide.</p>");
         }
-    }
-%>
+    %>
 
 <p><a href="index.html">Retour au sommaire</a></p>
 </body>
