@@ -1,4 +1,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.Random" %>
+<%
+    Integer nombreSecret = (Integer) session.getAttribute("nombreSecret");
+    if (nombreSecret == null) {
+        nombreSecret = new Random().nextInt(100) + 1; 
+        session.setAttribute("nombreSecret", nombreSecret);
+    }
+%>
 <html>
 <head>
 <title>Les conditions</title>
@@ -40,34 +48,29 @@
     <p>Valeur 3 (<%= intValeur3 %>) est <% out.print((intValeur3 % 2 == 0) ? "Pair" : "Impair"); %>.</p>
 
     <%-- Exercice 3 : Devinez le chiffre ? --%>
-    <h2>Exercice 3 : Devinez le chiffre ?</h2>
+    <h2>Exercice 3 : Devinez le nombre</h2>
+    <form action="#" method="post">
+        <p>Devinez le nombre (entre 1 et 100) : <input type="text" name="devine" required></p>
+        <p><input type="submit" value="Deviner"></p>
+    </form>
     <%
-        int nombreSecret = (int) (Math.random() * 100) + 1;
-        if (intValeur1 < nombreSecret) {
-            out.println("<p>Valeur 1 (" + intValeur1 + ") est trop petite pour deviner le nombre secret.</p>");
-        } else if (intValeur1 > nombreSecret) {
-            out.println("<p>Valeur 1 (" + intValeur1 + ") est trop grande pour deviner le nombre secret.</p>");
-        } else {
-            out.println("<p>Bravo ! Valeur 1 (" + intValeur1 + ") correspond au nombre secret (" + nombreSecret + ").</p>");
+    String devineStr = request.getParameter("devine");
+    if (devineStr != null && !devineStr.isEmpty()) {
+        try {
+            int devine = Integer.parseInt(devineStr);
+            if (devine < nombreSecret) {
+                out.println("<p>Votre nombre (" + devine + ") est trop petit.</p>");
+            } else if (devine > nombreSecret) {
+                out.println("<p>Votre nombre (" + devine + ") est trop grand.</p>");
+            } else {
+                out.println("<p>Bravo ! Vous avez trouvé le nombre secret (" + nombreSecret + ").</p>");
+                session.removeAttribute("nombreSecret");
+            }
+        } catch (NumberFormatException e) {
+            out.println("<p>Veuillez saisir un nombre valide.</p>");
         }
-
-        if (intValeur2 < nombreSecret) {
-            out.println("<p>Valeur 2 (" + intValeur2 + ") est trop petite pour deviner le nombre secret.</p>");
-        } else if (intValeur2 > nombreSecret) {
-            out.println("<p>Valeur 2 (" + intValeur2 + ") est trop grande pour deviner le nombre secret.</p>");
-        } else {
-            out.println("<p>Bravo ! Valeur 2 (" + intValeur2 + ") correspond au nombre secret (" + nombreSecret + ").</p>");
-        }
-
-        if (intValeur3 < nombreSecret) {
-            out.println("<p>Valeur 3 (" + intValeur3 + ") est trop petite pour deviner le nombre secret.</p>");
-        } else if (intValeur3 > nombreSecret) {
-            out.println("<p>Valeur 3 (" + intValeur3 + ") est trop grande pour deviner le nombre secret.</p>");
-        } else {
-            out.println("<p>Bravo ! Valeur 3 (" + intValeur3 + ") correspond au nombre secret (" + nombreSecret + ").</p>");
-        }
-    %>
-<% } %>
+    }
+%>
 
 <p><a href="index.html">Retour au sommaire</a></p>
 </body>
