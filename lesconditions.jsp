@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.Random" %>
 <%
+ // Stocker le nombre dans la session 
     Integer nombreSecret = (Integer) session.getAttribute("nombreSecret");
     if (nombreSecret == null) {
         nombreSecret = new Random().nextInt(100) + 1;
@@ -63,12 +64,12 @@
                 int devine = Integer.parseInt(devineStr);
 
                 if (devine < 1 || devine > 100) {
-                    out.println("<p style='color: red;'>Veuillez entrer un nombre entre 1 et 100.</p>");
+                    out.println("<p style='color: red;'> Entrer un nombre entre 1 et 100!</p>");
                 } else {
                     if (devine < nombreSecret) {
-                        out.println("<p style='color: blue;'>Votre nombre (" + devine + ") est trop petit.</p>");
+                        out.println("<p style='color: blue;'> Votre nombre (" + devine + ") est trop petit.</p>");
                     } else if (devine > nombreSecret) {
-                        out.println("<p style='color: blue;'>Votre nombre (" + devine + ") est trop grand.</p>");
+                        out.println("<p style='color: blue;'> Votre nombre (" + devine + ") est trop grand.</p>");
                     } else {
                         out.println("<p style='color: green;'>Bravo ! Vous avez trouvé le nombre secret (" + nombreSecret + ").</p>");
                         session.removeAttribute("nombreSecret"); 
