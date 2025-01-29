@@ -57,28 +57,29 @@
     </form>
     
     <%
-        // Vérification de l'entrée utilisateur
-        String devineStr = request.getParameter("devine");
-        if (devineStr != null && !devineStr.isEmpty()) {
-            try {
-                int devine = Integer.parseInt(devineStr);
-    
-                // Vérification des bornes
-                if (devine < 1 || devine > 100) {
-                    out.println("<p style='color: red;'>Veuillez entrer un nombre entre 1 et 100.</p>");
-                } else if (devine < nombreSecret) {
+    String devineStr = request.getParameter("devine");
+    if (devineStr != null && !devineStr.isEmpty()) {
+        try {
+            int devine = Integer.parseInt(devineStr);
+
+            if (devine < 1 || devine > 100) {
+                out.println("<p style='color: red;'>Veuillez entrer un nombre entre 1 et 100.</p>");
+            } else {
+                if (devine < nombreSecret) {
                     out.println("<p style='color: blue;'>Votre nombre (" + devine + ") est trop petit.</p>");
                 } else if (devine > nombreSecret) {
                     out.println("<p style='color: blue;'>Votre nombre (" + devine + ") est trop grand.</p>");
                 } else {
                     out.println("<p style='color: green;'>Bravo ! Vous avez trouvé le nombre secret (" + nombreSecret + ").</p>");
-                    session.removeAttribute("nombreSecret"); 
+                    session.removeAttribute("nombreSecret"); // Réinitialisation du jeu
                 }
-            } catch (NumberFormatException e) {
-                out.println("<p style='color: red;'>Veuillez saisir un nombre valide.</p>");
             }
+        } catch (NumberFormatException e) {
+            out.println("<p style='color: red;'>Veuillez saisir un nombre valide.</p>");
         }
-    %>
+    }
+%>
+<% } %>
 
 <p><a href="index.html">Retour au sommaire</a></p>
 </body>
